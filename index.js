@@ -8,33 +8,19 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'Public')));
 
 app.get('/', (req, res) => {
-res.send('Hello World!')
-})
+    const filePath = path.join(__dirname, 'data.json');
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+        console.error(err);
+     
+        } 
+         const jsonData = JSON.parse(data);
 
-app.get('/h', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+         res.json(jsonData)
+
     })
+    })  
 
-app.get('/r', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Register.html'));
-    })
-
-app.get('/l', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Login.html'));
-    })    
-    app.get('/api', (req, res) => {
-        const filePath = path.join(__dirname, 'data.json');
-        fs.readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-            console.error(err);
-         
-            } 
-             const jsonData = JSON.parse(data);
-
-             res.json(jsonData)
-
-        })
-        })  
 app.listen(3003, () => {
 console.log("server connected")
 })
